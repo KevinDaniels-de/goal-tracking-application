@@ -19,7 +19,7 @@ function ProgressBar(props) {
     };
 
     const textStyle = {
-        fontamily: "Montserrat, sans-serif",
+        fontFamily: "Montserrat, sans-serif",
         color: "rgba(31, 32, 65, 0.5)",
         marginTop: "10px"
     };

@@ -6,8 +6,7 @@ function Bar(props) {
     const { percentage } = props;
 
     const barStyle = {
-        background:
-        "linear-gradient(180deg, rgba(56,149,95,.25), rgba(102,210,234,.25))",
+        background: "linear-gradient(180deg, rgba(56,149,95,.25), rgba(102,210,234,.25))",
         width: "30px",
         height: "70.74px",
         borderRadius: "2px",
