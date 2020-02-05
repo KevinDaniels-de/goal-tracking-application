@@ -1,17 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
-function Tile(props) {
-    const { children, elevation } = props;
-
-    const divStyle = {
-        boxShadow: `0px 10px 20px rgba(31, 32, 64, ${elevation})`,
-        borderRadius: "5px 5px 5px 5px",
-        padding: "20px"
-    };
-
-    return <div style={divStyle}>{children}</div>;
-}
+const Tile = styled.div`
+    box-shadow: 0px 10px 20px rgba(31, 32, 64, ${props => props.elevation});
+    border-radius: 5px 5px 5px 5px;
+    padding: 20px;
+`;
 
 export default Tile;
 

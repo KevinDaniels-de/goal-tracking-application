@@ -1,6 +1,9 @@
 import React from "react";
 import DaysCompleted from "./Components/DaysCompleted";
 import "./index.css";
+import GlobalStyles from "./config/GlobalStyles";
+import theme from "./config/theme.js";
+import { ThemeProvider } from "styled-components";
 
 export default function App() {
     const checkins = [
@@ -24,7 +27,10 @@ export default function App() {
 
     return (
         <div className="App">
-            <DaysCompleted days={days} checkins={checkins}/>
+            <ThemeProvider theme={theme}>
+                <GlobalStyles />
+                <DaysCompleted days={days} checkins={checkins}/>
+            </ThemeProvider>
         </div>
     );
 }

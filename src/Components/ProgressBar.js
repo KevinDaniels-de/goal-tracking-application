@@ -1,38 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 function ProgressBar(props) {
     const { percentage } = props;
-    
-    const barStyle = {
-        width: "100%",
-        height: "12.85px",
-        background: "rgba(188, 156, 255, 0.25)",
-        borderRadius: "20px"
-    };
 
-    const innerBar = {
-        width: `${percentage}%`,
-        height: "100%",
-        background: "linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%)",
-        borderRadius: "20px"
-    };
+    const OuterBar = styled.div`
+        width: 100%;
+        height: 12.85px;
+        background: rgba(188, 156, 255, 0.25);
+        border-radius: 20px;
+    `;
 
-    const textStyle = {
-        fontFamily: "Montserrat, sans-serif",
-        color: "rgba(31, 32, 65, 0.5)",
-        marginTop: "10px"
-    };
+    const InnerBar = styled.div`
+        width: ${percentage}%;
+        height: 100%;
+        background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+        border-radius: 20px;
+    `;
+
+    const TextStyle = styled.div`
+        font-family: Montserrat, sans-serif;
+        color: rgba(31, 32, 65, 0.5);
+        margin-top: 10px;
+    `;
 
     return (
     <div>
-        <div style={barStyle}>
-            <div style={innerBar}></div>
-        </div>
+        <OuterBar>
+            <InnerBar />
+        </OuterBar>
 
-        <div style={textStyle}>
-            <span><b>{100-percentage}%</b> TO<div>GOAL</div></span>
-        </div>
+        <TextStyle>
+            <span><b>{percentage}%</b> TO GOAL</span>
+        </TextStyle>
     </div>
     );
 }
