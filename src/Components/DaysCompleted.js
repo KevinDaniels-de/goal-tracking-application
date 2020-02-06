@@ -10,7 +10,7 @@ function DaysCompleted(props) {
         text-align: center;
         margin: 0;
         font-weight: 400;
-        color: ${props => props.theme.colors.purple};
+        color: ${props => props.theme.colors.primary.main};
     `;
 
     const { days, checkins } = props;
