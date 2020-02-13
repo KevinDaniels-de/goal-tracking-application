@@ -1,16 +1,12 @@
 const theme = {
     colors: {
-        primary: {
-            main: "#BC9CFF",
-            light: "rgba(188, 156, 255, 0.25)"
-        },
+        purple: "#BC9CFF",
+        lightPurple: "#95A2FB",
+        grey: "#E9E9EC",
+        green: "#6FCF97",
+        darkGreen: "#256C43",
 
-        secondary: {
-            main: "#6FCF97",
-            dark: "#256C43"
-        },
-
-        grey: {
+        darkShade: {
             100: "#1F2041",
             75: "#0d0e1a",
             50: "#8f8fa0",
@@ -54,6 +50,10 @@ const theme = {
             fontSize: "12px",
             textTransform: "uppercase",
             color: "#0d0e1a"
+        },
+
+        em: {
+            fontSize: "11px",
         }
     },
 

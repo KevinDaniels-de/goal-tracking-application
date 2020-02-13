@@ -7,8 +7,6 @@ const Tile = styled.div`
     padding: 20px;
 `;
 
-export default Tile;
-
 Tile.propTypes = {
     elevation: PropTypes.string
 };
@@ -16,3 +14,5 @@ Tile.propTypes = {
 Tile.defaultProps = {
     elevation: "0.05"
 };
+
+export default Tile;

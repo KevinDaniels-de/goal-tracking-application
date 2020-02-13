@@ -6,28 +6,45 @@ import ProgressBar from "./ProgressBar";
 import styled from "styled-components";
 
 function DaysCompleted(props) {
-    const DaysCompleteHeading = styled.h1`
-        text-align: center;
-        margin: 0;
-        font-weight: 400;
-        color: ${props => props.theme.colors.primary.main};
-    `;
+  const { days, checkins } = props;
 
-    const { days, checkins } = props;
+  const StyledDaysCompleteHeading = styled.h2`
+    text-align: center;
+    color: ${ props => props.theme.colors.purple};
+  `;
 
-    return (
-    <Tile elevation={"0.1"}>
-        <DaysCompleteHeading>{days} Days Completed</DaysCompleteHeading>
+  const StyledRootDiv = styled.div`
+    display: grid;
+    grid-template-columns: 0.8fr;
+    grid-template-rows: 55px 80px 20px auto;
+    justify-content: center;
+  `;
 
-        <Histogram bars={checkins.map(b => b.score * 5)} barCount={10} />
-
-        <ProgressBar percentage={Math.floor(days / 30 * 100)} />
+  const StyledGoalHeading = styled.h4`
+    color: #1f2041;
+  `;
+  
+  return (
+    <Tile>
+      <StyledRootDiv>
+        <StyledDaysCompleteHeading> {days} Days Completed! </StyledDaysCompleteHeading>
+        <Histogram barCount={7} bars={checkins.map(c => c.score * 5)} />
+        <ProgressBar percentage={50} />
+        <StyledGoalHeading>
+          <strong>50%</strong> TO GOAL!
+        </StyledGoalHeading>
+      </StyledRootDiv>
     </Tile>
-    );
+  );
 }
 
-export default DaysCompleted;
-
 DaysCompleted.propTypes = {
-    days: PropTypes.number.isRequired
+  days: PropTypes.number,
+  checkins: PropTypes.array.isRequired
 };
+
+DaysCompleted.defaultProps = {
+  days: 0
+};
+
+export default DaysCompleted;

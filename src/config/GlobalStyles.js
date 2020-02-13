@@ -1,23 +1,40 @@
-import { createGlobalStyle as gStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
-const GlobalStyles = gStyle`
+const GlobalStyles = createGlobalStyle`
 
 body {
-    font-family:  ${props => props.theme.typography.fontFamily}
+    font-family: ${({theme}) => theme.typography.fontFamily};
 }
 
 h1 {
-    font-size:  ${props => props.theme.typography.h1.fontSize} 
+    font-size: ${({theme}) => theme.typography.h1.fontSize};
 }
 
 h2 {
-    font-size: 32px;
+    font-size: ${({theme}) => theme.typography.h2.fontSize};
 }
 
+
 h3 {
-    font-size: 32px;
-    font-size: 24px;
+    font-size: ${({theme}) => theme.typography.h3.fontSize};
 }
+
+
+h4 {
+    font-size: ${({theme}) => theme.typography.h4.fontSize};
+}
+
+h6 {
+    font-size: ${({theme}) => theme.typography.h6.fontSize};
+    font-weight: ${({theme}) => theme.typography.h6.fontWeight};
+}
+
+em {
+    font-size: ${({theme}) => theme.typography.em.fontSize};
+}
+
 `
 
 export default GlobalStyles;
+
+
