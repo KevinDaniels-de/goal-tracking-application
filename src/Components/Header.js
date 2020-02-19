@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import PropTypes from 'prop-types';
 import styled from "styled-components";
 import avatarLarge from "../assets/avatar_small.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +6,14 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 function Menu(props) {  
 
-  
+  const handleOpenChange = e => {
+    props.onOpenChange(props.open);            
+  }
 
   const StyledNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+
     ul {
       display: flex;
       flex-direction: column;
@@ -29,9 +33,18 @@ function Menu(props) {
     background:   ${({ theme, active }) => active ? theme.colors.darkShade[25] : ""}
   `;
 
+  const StyledP = styled.p`
+    color: white;
+    font-size: 2em;
+    display: inline-block;
+    padding: 16px;
+    cursor: pointer;
+    text-align: right;
+  `;
+
   return (
       <StyledNav>
-        <p> X </p>
+        <StyledP onClick={handleOpenChange}> X </StyledP>
         <ul>
           <StyledLi  active={true}> Dash </StyledLi>
           <StyledLi > Profile </StyledLi>
@@ -45,7 +58,7 @@ function Header() {
   const [open, setOpen] = useState(false);
 
   const handleClick = e => {
-    e.preventDefault();
+    // e.preventDefault();
     setOpen(!open);
   };
   
@@ -100,7 +113,7 @@ function Header() {
   return (
     <div>
       <StyledMenuWrapper open={open}>
-          <Menu  />
+          <Menu open={open} onOpenChange={handleClick} />
       </StyledMenuWrapper>
      
       <StyledWrapper>

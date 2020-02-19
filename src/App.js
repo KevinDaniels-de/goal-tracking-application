@@ -26,28 +26,28 @@ function App() {
 
     const days = checkins.length;
 
-    const [count, setCount] = useState(0);
-    const [count2, setCount2] = useState(40);
-    const [count3, setCount3] = useState(0);
+    // const [count, setCount] = useState(0);
+    // const [count2, setCount2] = useState(40);
+    // const [count3, setCount3] = useState(0);
     
-    const handleClickAdd = e => {
-      e.preventDefault();
+    // const handleClickAdd = e => {
+    //   e.preventDefault();
       
-      setCount(count+1);
-    };
+    //   setCount(count+1);
+    // };
   
-    const handleClickDec2 = e => {
-      e.preventDefault();
+    // const handleClickDec2 = e => {
+    //   e.preventDefault();
   
-      if(count2 > 0)
-        setCount2(count2-1);
-    };
+    //   if(count2 > 0)
+    //     setCount2(count2-1);
+    // };
   
-    const handleTimes = e => {
-      e.preventDefault();
+    // const handleTimes = e => {
+    //   e.preventDefault();
   
-      setCount3(count * count2);
-    };
+    //   setCount3(count * count2);
+    // };
 
     return (
         <div>
@@ -55,12 +55,12 @@ function App() {
           <Header />
           <GlobalStyles />
   
-          <h2>Counter 1: {count}</h2>
+          {/* <h2>Counter 1: {count}</h2>
           <h2>Counter 2: {count2}</h2>
           <h2>Counter 3: {count3}</h2>
           <button onClick={handleClickAdd}>Increase</button>
           <button onClick={handleClickDec2}>Decrease</button>
-          <button onClick={handleTimes}>Times</button>
+          <button onClick={handleTimes}>Times</button> */}
   
           
   
