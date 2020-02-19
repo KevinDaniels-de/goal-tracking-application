@@ -1,11 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import avatarLarge from "../assets/avatar_small.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {Link, useLocation} from "react-router-dom";
 
 function Menu(props) {  
 
+  const location = useLocation();
+
+  const [loc, setLoc] = useState("");
+
+  useEffect(() => {
+    if(location.pathname != loc) {
+
+      // props.onOpenChange(false);
+    }
+    
+   }, [location.pathname, loc]); 
+  
   const handleOpenChange = e => {
     props.onOpenChange(props.open);            
   }
@@ -46,8 +59,21 @@ function Menu(props) {
       <StyledNav>
         <StyledP onClick={handleOpenChange}> X </StyledP>
         <ul>
-          <StyledLi  active={true}> Dash </StyledLi>
-          <StyledLi > Profile </StyledLi>
+          <StyledLi  active={location.pathname === "/"}>
+            <Link to="/"> Dash </Link>
+          </StyledLi>
+
+          <StyledLi active={location.pathname === "/profile"}>
+            <Link to="/profile"> Profile </Link>
+          </StyledLi>
+
+          <StyledLi active={location.pathname === "/checkin"}>
+            <Link to="/checkin"> Checkin </Link>
+          </StyledLi>
+
+          <StyledLi active={location.pathname === "/join"}>
+            <Link to="/join"> Join </Link>
+          </StyledLi>
         </ul>
       </StyledNav>);
 }
