@@ -17,16 +17,14 @@ const StyledHeading = styled.h4`
   color: ${({ theme }) => theme.colors.purple};
 `;
 
-
+const handleSubmit = data => console.log(data);
 
 const Checkin = props => {
-
-  
 
   return (
     <StyledTile>
       <StyledHeading> Log Your Progress For May 18 </StyledHeading>
-      <CheckinForm />
+      <CheckinForm onSubmit={handleSubmit} />
     </StyledTile>
   );
 };

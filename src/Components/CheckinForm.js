@@ -77,6 +77,8 @@ const StyledCheckinTitle = styled.div`
 
 const CheckinForm = props => {
 
+  const {onSubmit} = props;
+
   const maxCommentLength  = 145;
   const [total, setTotal] = useState(0);
   const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
@@ -138,12 +140,12 @@ const CheckinForm = props => {
     );
   }, [formValues]);
 
-  const onSubmit = data => {
-      console.log({...data,...checkinScore, ...{total}})
+  const onFormSubmit = data => {
+      onSubmit({...data,...checkinScore, ...{total}});
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
       <StyledLabel>Did you exercise for at least 20 mins (5)?</StyledLabel>
       <StyledCheckinP>
         {" "}
