@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import uuid from "uuid";
 
 function Bar(props) {
   const { percentage } = props;
 
-  const StyledHistogramOuterBar = styled.div`
+  const StyledBar = styled.div`
     background: linear-gradient(
       180deg,
       rgba(56, 149, 95, 0.25),
@@ -19,7 +18,7 @@ function Bar(props) {
     align-items: flex-end;
   `;
 
-  const StyledHistogramInnerBar = styled.div`
+  const StyledInnerBar = styled.div`
     background: linear-gradient(
       180deg,
       rgba(56, 149, 95, 1),
@@ -33,9 +32,9 @@ function Bar(props) {
   `;
 
   return (
-    <StyledHistogramOuterBar>
-      <StyledHistogramInnerBar height={percentage}> </StyledHistogramInnerBar>
-    </StyledHistogramOuterBar>
+    <StyledBar>
+      <StyledInnerBar height={percentage}> </StyledInnerBar>
+    </StyledBar>
   );
 }
 
@@ -56,7 +55,7 @@ function Histogram(props) {
 
   return (
     <StyledHistogram>
-      {bars.map((b, i) => (i <= barCount ? <Bar key={uuid.v4()} percentage={b} /> : ""))}
+      {bars.map((b, i) => (i <= barCount ? <Bar percentage={b} /> : ""))}
     </StyledHistogram>
   );
 }

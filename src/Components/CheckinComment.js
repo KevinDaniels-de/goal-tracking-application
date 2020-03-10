@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Tile from "./Tile";
 import styled from "styled-components";
 import avatarLarge from "../assets/avatar_large.png";
@@ -32,7 +31,7 @@ function LikeButton(props) {
 function CheckinComment(props) {
   const StyledDetailsArea = styled.div`
     display: grid;
-    grid-template-columns: 0.5fr 3fr;
+    grid-template-columns: 0.2fr 3fr;
     align-items: center;
     textarea {
         border-radius: 4px;
@@ -76,6 +75,7 @@ function CheckinComment(props) {
    border-radius: 15px;
    background-color: ${({ theme }) => theme.colors.grey};
    width: 95%;
+   margin-top: 2%;
    min-height: 80px;
    padding 3%;
    h6:nth-child(2) {
@@ -92,7 +92,7 @@ function CheckinComment(props) {
           <img
             src={avatarLarge}
             style={{ marginBottom: "-20px" }}
-            alt="avatar image"
+            alt="avatar"
           />
           <LikeButton></LikeButton>
         </StyledPhotoArea>
@@ -119,7 +119,7 @@ function CheckinComment(props) {
         <img
           src={avatarSmall}
           style={{ marginBottom: "-20px" }}
-          alt="avatar image"
+          alt="avatar"
         />
 
         <CommentArea>
@@ -135,7 +135,7 @@ function CheckinComment(props) {
         <img
           src={avatarSmall}
           style={{ marginBottom: "-20px" }}
-          alt="avatar image"
+          alt="avatar"
         />
 
         <textarea rows="4"> 
