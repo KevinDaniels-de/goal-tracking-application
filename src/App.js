@@ -3,7 +3,11 @@ import theme from "./config/theme.js";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./config/GlobalStyles";
 import Header from "./Components/Header";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import useAuth from "./services/firebase/useAuth";
+import firebase from "firebase/app";   // the firbase core lib
+import 'firebase/auth'; // specific products
+import firebaseConfig from "./config/Firebase";  // the firebase config we set up ealier
 
 import Dash from "./Views/Dash";
 import Join from "./Views/Join";
@@ -58,9 +62,34 @@ const checkins = [
   { date: "Wed Jan 15 2020 07:17:11 GMT+0000 (Greenwich Mean Time)", score: 20 }
 ];
 
+function Protected({ authenticated, children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        authenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 function App() {
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const {isAuthenticated, createEmailUser} = useAuth(firebase.auth());
 
   const handleClick = e => {
     setMenuOpen(!menuOpen);
@@ -86,21 +115,21 @@ function App() {
           style={{ width: "100vw",  horizontalScroll: 'none', overflowX: 'hidden' , height: "100vh" }}
         >
           <Switch>
-            <Route exact path="/">
+            <Protected authenticated={isAuthenticated} exact path="/">
               <Dash checkins={checkins} />
-            </Route>
+            </Protected>
             <Route path="/join">
-              <Join />
+              <Join createEmailUser={createEmailUser} />
             </Route>
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/profile">
+            <Protected authenticated={isAuthenticated} path="/profile">
               <Profile />
-            </Route>
-            <Route path="/checkin">
+            </Protected>
+            <Protected authenticated={isAuthenticated} path="/checkin">
               <Checkin />
-            </Route>
+            </Protected>
           </Switch>
         </div>
       </ThemeProvider>

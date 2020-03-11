@@ -8,12 +8,21 @@ import { useForm } from 'react-hook-form';
 
 import * as yup from 'yup';
 
+const StyledHeading = styled.h2`
+  text-align: center;
+  margin-top: 2%;
+  color: ${({ theme }) => theme.colors.purple};
+`;
 
+const StyledSocialIconArea = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
 
 
 function LoginForm(props) {
   
-  const {buttonText} = props;
+  const {buttonText, onSubmit} = props;
   const [displayEmail, setDisplayEmail] = useState(false);
 
   const loginFormSchema = yup.object().shape({
@@ -23,31 +32,16 @@ function LoginForm(props) {
 
 
   const { register, handleSubmit,  errors } = useForm({validationSchema:loginFormSchema});
-  
 
-
-  
-
-  
-
-  const StyledHeading = styled.h2`
-    text-align: center;
-    margin-top: 2%;
-    color: ${({ theme }) => theme.colors.purple};
-  `;
-
-  const StyledSocialIconArea = styled.div`
-    display: flex;
-    justify-content: space-around;
-  `;
 
   const handleClick = e => {
     e.preventDefault();
     setDisplayEmail(!displayEmail);
 
+
   }
 
-  const onSubmit = data => { console.log(data) }
+  const handleInnerSubmit = data => onSubmit(data)
 
   const errorBorder = error => error && ({borderColor: 'red'})
 
@@ -65,7 +59,7 @@ function LoginForm(props) {
        
 
        {displayEmail && (
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleInnerSubmit)}>
           <p>
             <label> Email </label>
           </p>
@@ -92,7 +86,8 @@ function LoginForm(props) {
 }
 
 LoginForm.propTypes = {
-  buttonText: PropTypes.string
+  buttonText: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired
 };
 
 LoginForm.defaultProps = {
