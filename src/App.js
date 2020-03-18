@@ -3,17 +3,19 @@ import theme from "./config/theme.js";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./config/GlobalStyles";
 import Header from "./Components/Header";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
-import useAuth from "./services/firebase/useAuth";
-import firebase from "firebase/app";   // the firbase core lib
-import 'firebase/auth'; // specific products
-import firebaseConfig from "./config/Firebase";  // the firebase config we set up ealier
+import Loader from "./Components/Loader";
+import { Switch, Route, useLocation, Redirect } from "react-router-dom";
 
 import Dash from "./Views/Dash";
 import Join from "./Views/Join";
 import Checkin from "./Views/Checkin";
 import Profile from "./Views/Profile";
 import Login from "./Views/Login";
+
+import useAuth from "./services/firebase/useAuth";
+import firebase from "firebase/app"; // the firbase core lib
+import "firebase/auth"; // specific products
+import firebaseConfig from "./config/firebase"; // the firebase config we set up ealier
 
 const checkins = [
   {
@@ -62,7 +64,13 @@ const checkins = [
   { date: "Wed Jan 15 2020 07:17:11 GMT+0000 (Greenwich Mean Time)", score: 20 }
 ];
 
+ 
+let initAttemptedRoute = "/"
+
 function Protected({ authenticated, children, ...rest }) {
+
+  initAttemptedRoute  = useLocation().pathname;
+
   return (
     <Route
       {...rest}
@@ -82,6 +90,26 @@ function Protected({ authenticated, children, ...rest }) {
   );
 }
 
+function RedirectToDash({ authenticated, children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !authenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: initAttemptedRoute,
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 function App() {
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
@@ -89,7 +117,15 @@ function App() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const {isAuthenticated, createEmailUser} = useAuth(firebase.auth());
+  const {
+    isAuthenticated,
+    createEmailUser,
+    signInEmailUser,
+    signInWithProvider,
+    signOut,
+    user,
+    loading
+  } = useAuth(firebase.auth);
 
   const handleClick = e => {
     setMenuOpen(!menuOpen);
@@ -103,29 +139,68 @@ function App() {
     setMenuOpen(false);
   }, [location]);
 
+  if (loading ) {
+    return  <Loader />;
+  } 
+ 
+  
   return (
+
+    
     <div>
       <ThemeProvider theme={theme}>
-        {location.pathname !== "/join" && (
-          <Header onClick={handleClick} open={menuOpen} />
+        {location.pathname !== "/join" && location.pathname !== "/login" && (
+          <Header
+            onClick={handleClick}
+            signOut={signOut}
+            user={user}
+            open={menuOpen}
+          />
         )}
         <GlobalStyles />
         <div
           onClick={handleOuterWrapperClick}
-          style={{ width: "100vw",  horizontalScroll: 'none', overflowX: 'hidden' , height: "100vh" }}
+          style={{
+            width: "100vw",
+            horizontalScroll: "none",
+            overflowX: "hidden",
+            height: "100vh"
+          }}
         >
           <Switch>
             <Protected authenticated={isAuthenticated} exact path="/">
               <Dash checkins={checkins} />
             </Protected>
-            <Route path="/join">
-              <Join createEmailUser={createEmailUser} />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
+            <RedirectToDash authenticated={isAuthenticated} path="/join">
+              
+            
+            {
+                /**
+                 * I have set up these loaders to handle the social sign-in redirect
+                 * which redirects back to the page you initiated it from
+                 * as such we only want to show the page after the redirect has authenticated
+                 */
+              } 
+
+                <Join
+                signInWithProvider={signInWithProvider}
+                createEmailUser={createEmailUser}
+              />
+
+          
+              
+            </RedirectToDash>
+            <RedirectToDash authenticated={isAuthenticated} path="/login">
+        
+      
+                  <Login
+                  signInWithProvider={signInWithProvider}
+                  signInEmailUser={signInEmailUser}
+                />
+             
+            </RedirectToDash>
             <Protected authenticated={isAuthenticated} path="/profile">
-              <Profile />
+              <Profile  user={user} />
             </Protected>
             <Protected authenticated={isAuthenticated} path="/checkin">
               <Checkin />
